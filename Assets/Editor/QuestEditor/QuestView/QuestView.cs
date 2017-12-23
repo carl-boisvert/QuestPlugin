@@ -12,12 +12,14 @@ public abstract class QuestView : EditorWindow
 
     protected string questName;
     protected List<Objective> objectives;
+    protected List<Quest> mustBeDone = new List<Quest>();
     protected int selected = 0;
-    protected string[] options = Objective.objectiveTypes;
+    protected List<string> questsOptions = new List<string>();
 
     public void OnGUI()
     {
         EditorGUILayout.LabelField(windowTitle, EditorStyles.boldLabel);
+        selected = EditorGUILayout.Popup("Parent Quest", selected, questsOptions.ToArray());
         questName = EditorGUILayout.TextField("Name", questName);
         if (GUILayout.Button(objectiveButtonText))
         {
@@ -31,6 +33,14 @@ public abstract class QuestView : EditorWindow
                 OnObjectiveClick(obj);
             }
         }
+        EditorGUILayout.Separator();
+        foreach (Quest quest in mustBeDone)
+        {
+            if (GUILayout.Button(quest.QuestName, GUILayout.MaxWidth(100)))
+            {
+                //OnObjectiveClick(quest);
+            }
+        }
         if (GUILayout.Button(actionButtonText))
         {
             OnClick();
@@ -40,6 +50,11 @@ public abstract class QuestView : EditorWindow
     public void setQuestTree(QuestTree questTree)
     {
         quests = questTree;
+        questsOptions.Add("None");
+        foreach (Quest quest in quests.GetQuests()) {
+            Debug.Log(quest.QuestName);
+            questsOptions.Add(quest.QuestName);
+        }
     }
 
     protected abstract string actionButtonText

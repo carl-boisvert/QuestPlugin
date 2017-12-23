@@ -31,6 +31,7 @@ public class KillObjective : Objective
     {
         JSONObject jobject = new JSONObject();
         jobject.Add("Type", type);
+        jobject.Add("Name", objectiveName);
         jobject.Add("HowMany", howMany);
         jobject.Add("Target", target.gameObject.name);
         return jobject;
@@ -40,6 +41,7 @@ public class KillObjective : Objective
     {
         type = data["Type"];
         howMany = data["HowMany"];
+        objectiveName = data["Name"];
         target = GameObject.Find(data["Target"]).gameObject;
     }
 }

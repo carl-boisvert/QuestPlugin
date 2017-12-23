@@ -36,15 +36,23 @@ public class QuestEditor : EditorWindow
         
         EditorGUILayout.BeginScrollView(new Vector2(0,0), true, true);
         if(quests.GetQuests().Count != 0){
+            int i = 1;
             foreach (Quest quest in quests.GetQuests())
             {
-                if (GUILayout.Button(quest.QuestName, GUILayout.MaxWidth(100)))
+                if (GUI.Button(new Rect(i * 42, i * 42, 10*quest.QuestName.Length, 40), quest.QuestName))
                 {
-                    EditQuest editQuest = (EditQuest)EditorWindow.GetWindow(typeof(EditQuest));
-                    editQuest.setQuestTree(quests);
-                    editQuest.setQuest(quest);
-                    editQuest.Show();
+                    if (Event.current.button == 0) {
+                        EditQuest editQuest = (EditQuest)EditorWindow.GetWindow(typeof(EditQuest));
+                        editQuest.setQuestTree(quests);
+                        editQuest.setQuest(quest);
+                        editQuest.Show();
+                    }
                 }
+                i++;
+                /*if (GUILayout.Button(quest.QuestName, GUILayout.MaxWidth(100)))
+                {
+                    
+                }*/
             }
         }
         EditorGUILayout.EndScrollView();

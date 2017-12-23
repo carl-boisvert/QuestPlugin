@@ -19,6 +19,7 @@ public class GetItemObjective : Objective {
     public override JSONObject toJson()
     {
         JSONObject jobject = new JSONObject();
+        jobject.Add("Name", objectiveName);
         jobject.Add("Type", type);
         jobject.Add("Item", item.gameObject.name);
         return jobject;
@@ -26,6 +27,8 @@ public class GetItemObjective : Objective {
 
     public override void fromJson(JSONNode data)
     {
-        throw new System.NotImplementedException();
+        objectiveName = data["Name"];
+        type = data["Type"];
+        item = (Item)GameObject.Find(data["Item"]).GetComponent<Item>();
     }
 }

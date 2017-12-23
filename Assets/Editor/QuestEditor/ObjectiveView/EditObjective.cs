@@ -10,7 +10,7 @@ public class EditObjective : ObjectiveView
     {
         get
         {
-            return "Add objective";
+            return "Edit objective";
         }
     }
 
